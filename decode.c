@@ -190,8 +190,9 @@
      system(cmd);
      log_msg("Encerrando programa.");
  #endif
- 
+     log_msg("Programa encerrado com sucesso!");
      img_free(img);
+     
      return 0;
  }
  
