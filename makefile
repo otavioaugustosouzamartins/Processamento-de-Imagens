@@ -3,8 +3,7 @@
 # BACHARELADO EM CIÊNCIA DA COMPUTAÇÃO
 # Trabalho: Decodificador do formato PGH
 # Professor: Luiz Eduardo da Silva
-# Aluno: [SEU NOME AQUI]
-# Data: [DATA AQUI]
+# Aluno: Otávio Augusto Souza Martins
 #==============================================================
 
 # Compilador e flags

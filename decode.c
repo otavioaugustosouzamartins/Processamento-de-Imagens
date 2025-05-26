@@ -3,7 +3,7 @@
  * BACHARELADO EM CIÊNCIA DA COMPUTAÇÃO
  * Trabalho . . : Decodificador do formato PGH
  * Professor . : Luiz Eduardo da Silva
- * Aluno . . . : Otávio Augusto Souza Martins
+ * Aluno . . . : Otávio Augusto Souza Martins 2022.1.08.016
  *=============================================================*/
 
  #include <stdio.h>
@@ -177,12 +177,12 @@
      img_put(img, output_file, GRAY);
      printf("[LOG] Imagem salva: %s\n", output_file);
  
-     // Monta comando para abrir visualizador de imagens (IrfanView no Windows, eog no Linux)
+     // Monta comando para abrir visualizador de imagens
      char cmd[150];
  #if defined(_WIN32) || defined(__WIN64__) || defined(__CYGWIN__)
      
     log_msg("Executando visualizador...");
-    sprintf(cmd, "start \"\" \"%s\" \"%s\"", VIEWER, output_file);  // <- adiciona aspas
+    sprintf(cmd, "start \"\" \"%s\" \"%s\"", VIEWER, output_file);  
     system(cmd);
     log_msg("Encerrando programa.");
  #else
