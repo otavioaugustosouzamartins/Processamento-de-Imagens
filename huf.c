@@ -252,6 +252,6 @@
          sprintf(str, "%s tree.svg &", "eog");
          system(str);
      }
-     return root; // <-- retorna a raiz
+     return root; 
  }
  

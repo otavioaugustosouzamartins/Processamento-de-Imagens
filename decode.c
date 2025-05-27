@@ -18,7 +18,7 @@
 
  
  extern struct {
-     int freq, father, left, right, symbol;
+     int freq, father, left, right, simbolo;
  } node[];
  
  extern int buildTree(int *hist, int size);
@@ -26,7 +26,7 @@
  // Função para imprimir log
  void log_msg(const char *msg) {
      printf("[LOG] %s\n", msg);
-     fflush(stdout);
+     //fflush(stdout);
  }
  
  // Função para erro fatal e saída
@@ -36,26 +36,32 @@
  }
  
  // Verifica o cabeçalho do arquivo PGH
- void verificar_cabecalho(FILE *fp) {
+ void verificar_cabecalho(FILE *fp, int *rows, int *cols) {
      char linha[100];
-     fgets(linha, sizeof(linha), fp);
-     if (strncmp(linha, "PH", 2) != 0)
-         erro("Número mágico inválido (esperado: PH)");
- 
-     // Pula linhas de comentário iniciadas por '#'
-     do {
-         fgets(linha, sizeof(linha), fp);
-     } while (linha[0] == '#');
- 
-     // Retrocede para a linha lida, que contém as dimensões
-     fseek(fp, -strlen(linha), SEEK_CUR);
+    
+     if(fgets(linha, sizeof(linha), fp) != NULL){
+        printf("Erro ao ler arquivo");
+     }
+
+     if (linha[0] == 'P' && linha[1] == 'H'){   
+       // Pula linhas de comentário iniciadas por '#'
+        do {
+            if(fgets(linha, sizeof(linha), fp) == NULL){
+               printf("Erro ao ler cabeçalho!");
+            }
+        } while (linha[0] == '#');
+
+        // Retrocede para a linha lida, que contém as dimensões
+        if(sscanf(linha, "%d %d", cols,rows) != 2){
+            printf("Erro ao ler dimensões da imagem");
+            return;
+        }
+     }else{
+        printf("Erro, número mágico inválido!");
+     }
+     
  }
  
- // Lê as dimensões da imagem (colunas x linhas)
- void ler_dimensoes(FILE *fp, int *cols, int *rows) {
-     fscanf(fp, "%d %d\n", cols, rows);
-     printf("[LOG] Dimensões: %d x %d\n", *cols, *rows);
- }
  
  // Lê o nível máximo de cinza
  int ler_nivel(FILE *fp) {
@@ -89,9 +95,9 @@
              if (current < 0)
                  erro("Nó inválido durante decodificação");
  
-             // Se nó folha, grava pixel e volta para a raiz
+             // Se for nó folha, grava pixel e volta para a raiz
              if (node[current].left == -1 && node[current].right == -1) {
-                 img->px[pos++] = node[current].symbol;
+                 img->px[pos++] = node[current].simbolo;
                  current = root;
              }
          }
@@ -124,11 +130,10 @@
      log_msg("Abrindo arquivo...");
      FILE *fp = fopen(filename, "rb");
      if (!fp) erro("Falha ao abrir arquivo");
+
+     int rows, cols;
+     verificar_cabecalho(fp, &rows, &cols);
  
-     verificar_cabecalho(fp);
- 
-     int cols, rows;
-     ler_dimensoes(fp, &cols, &rows);
      int max_gray = ler_nivel(fp);
  
      int hist[MAX_NODES];
