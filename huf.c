@@ -29,7 +29,7 @@
      int father;
      int left;
      int right;
-     int symbol;
+     int simbolo;
  } nodetype;
  
  nodetype node[MAXNODES];
@@ -44,7 +44,7 @@
  
  int pqinsert(int *rootnodes, int i)
  {
-     int k, ant, aux;
+     int ant, aux;
      aux = *rootnodes;
      ant = -1;
      while (aux != -1 && node[aux].freq <= node[i].freq)
@@ -62,6 +62,7 @@
          node[i].father = node[ant].father;
          node[ant].father = i;
      }
+     return 1;
  }
  
  /*--------------------------------------------------------------
@@ -114,7 +115,7 @@
          node[i].left = -1;
          node[i].right = -1;
          node[i].father = -1;  // inicializar father
-         node[i].symbol = i;
+         node[i].simbolo = i;
          pqinsert(&rootnodes, i);
      }
      shownodes(rootnodes, mn + 1);
@@ -175,37 +176,37 @@
   * e digitar em linha de comando:
   *    dot -Tpng tree.dot -o tree.png
   *--------------------------------------------------------------*/
- void drawLinks(FILE *dot, int root)
- {
-     if (root != -1)
-     {
-         int hasLeft = node[root].left != -1;
-         int hasRight = node[root].right != -1;
-         if (!hasLeft && !hasRight) // folha
+ //void drawLinks(FILE *dot, int root)
+// {
+     //if (root != -1)
+     //{
+         //int hasLeft = node[root].left != -1;
+         //int hasRight = node[root].right != -1;
+         //if (!hasLeft && !hasRight) // folha
              // fprintf(dot, "\tn%d [shape = record, label=\"px=%d|fq=%d\", color=RED]\n", root, root, node[root].freq);
-             fprintf(dot, "\tn%d [shape = record, label=\"%c|%d\", color=RED]\n", root, root + 'a', node[root].freq);
-         else
-             fprintf(dot, "\tn%d [shape = circle, label=\"%d\"]\n", root, node[root].freq);
-         drawLinks(dot, node[root].left);
-         if (hasLeft)
-             fprintf(dot, "\tn%d -> n%d [label=0]\n", root, node[root].left);
-         drawLinks(dot, node[root].right);
-         if (hasRight)
-             fprintf(dot, "\tn%d -> n%d [label=1]\n", root, node[root].right);
-     }
- }
+             //fprintf(dot, "\tn%d [shape = record, label=\"%c|%d\", color=RED]\n", root, root + 'a', node[root].freq);
+         //else
+            //fprintf(dot, "\tn%d [shape = circle, label=\"%d\"]\n", root, node[root].freq);
+         //drawLinks(dot, node[root].left);
+         //if (hasLeft)
+             //fprintf(dot, "\tn%d -> n%d [label=0]\n", root, node[root].left);
+         //drawLinks(dot, node[root].right);
+         //if (hasRight)
+             //fprintf(dot, "\tn%d -> n%d [label=1]\n", root, node[root].right);
+     ///}
+ //}
  
- void createDot(int root)
- {
-     int i;
-     FILE *dot;
-     dot = fopen("tree.dot", "wt");
-     fprintf(dot, "digraph {\n");
-     fprintf(dot, "\tnode [fontename=\"Arial\"];\n");
-     drawLinks(dot, root);
-     fprintf(dot, "}\n");
-     fclose(dot);
- }
+ //void createDot(int root)
+ //{
+     //int i;
+     //FILE *dot;
+     //dot = fopen("tree.dot", "wt");
+     //fprintf(dot, "digraph {\n");
+     //fprintf(dot, "\tnode [fontename=\"Arial\"];\n");
+     //drawLinks(dot, root);
+     //fprintf(dot, "}\n");
+     //fclose(dot);
+ //}
  
  void displayCalcs(int *h, int n)
  {
@@ -247,7 +248,7 @@
      displayCalcs(h, mn);
      if (dot)
      {
-         createDot(root);
+         //createDot(root);
          system("dot -Tsvg tree.dot -o tree.svg");
          sprintf(str, "%s tree.svg &", "eog");
          system(str);

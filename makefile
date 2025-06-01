@@ -19,7 +19,7 @@ all: $(TARGET)
 
 # Linkagem do executável
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) -lm
 
 # Compilar os arquivos individualmente
 decode.o: decode.c imagelib.h
@@ -34,3 +34,5 @@ huf.o: huf.c
 # Limpar tudo
 clean:
 	rm -f *.o $(TARGET)
+
+.PHONY: all clean

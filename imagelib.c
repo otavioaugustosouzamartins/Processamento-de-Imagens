@@ -46,7 +46,7 @@ int img_free(image Im)
  *-------------------------------------------------------------------------*/
 void img_name(char *name, char *in, char *out, int tpIn, int tpOut)
 {
-    char *ext[3] = {".pbm", ".pgm", ".ppm"};
+    char *ext[4] = {".pbm", ".pgm", ".ppm", ".pgh"};
     char *p = strstr(name, ext[tpIn - 1]);
     if (p)
         *p = 0;
@@ -176,11 +176,14 @@ void img_put(image img, char *name, int tp)
             count += 3;
         }
 
-        if (count >= PER_LINE)
-        {
-            fprintf(fimg, "\n");
-            count = 0;
+        if((i + 1) % img->nc == 0){
+            fprintf(fimg,"\n");
         }
+        //if (count >= PER_LINE)
+       // {
+           // fprintf(fimg, "\n");
+            //count = 0;
+        //}
     }
 
     // Caso não tenha acabado a linha, termina com \n para manter padrão
