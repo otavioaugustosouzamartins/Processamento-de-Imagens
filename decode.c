@@ -65,8 +65,11 @@
  
  int ler_nivel(FILE *fp) {
      int nivel;
-     fscanf(fp, "%d\n", &nivel);
+     if(fscanf(fp, "%d\n", &nivel) != 1){
+        erro("Erro ao ler o nível máximo de cinza");
+     }else{
      printf("[LOG] Nível máximo de cinza: %d\n", nivel);
+     }
      return nivel;
  }
 
@@ -75,8 +78,12 @@
  //===========================
 
  void ler_histograma(FILE *fp, int *hist, int tamanho) {
-    fread(hist, sizeof(int), tamanho, fp);
-    printf("[LOG] Histograma lido (%d valores)\n", tamanho);
+    size_t lidos = fread(hist, sizeof(int), tamanho, fp);
+    if(lidos != (size_t)tamanho){
+        fprintf(stderr,  "[ERRO] Erro ao ler o histograma: esperados %d elementos, lidos %d\n", tamanho, lidos);
+    }else{
+        printf("[LOG] Histograma lido (%d valores)\n", tamanho);
+    }
 }
 
 //===================================================

@@ -8,7 +8,7 @@
 
 # Compilador e flags
 CC = gcc
-CFLAGS = -Wall -O2
+CFLAGS = -Wall -Wextra -O2
 
 # Arquivos objeto e executável
 OBJS = decode.o imagelib.o huf.o
@@ -28,7 +28,7 @@ decode.o: decode.c imagelib.h
 imagelib.o: imagelib.c imagelib.h
 	$(CC) $(CFLAGS) -c imagelib.c
 
-huf.o: huf.c
+huf.o: huf.c huf.h
 	$(CC) $(CFLAGS) -c huf.c
 
 # Limpar tudo

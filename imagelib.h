@@ -15,7 +15,8 @@ enum
 {
     BW = 1,
     GRAY,
-    COLOR
+    COLOR,
+    PGH
 };
 
 #if defined(_WIN32) || defined(__WIN64__) || defined(__CYGWIN__)
